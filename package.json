@@ -1,0 +1,16 @@
+{
+  "name": "procedural-engine",
+  "version": "1.0.0",
+  "description": "A basic javascript engine to proceduraly generate assets",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "dannyoz",
+  "license": "MIT",
+  "devDependencies": {
+    "browserify": "^14.1.0",
+    "express": "^4.15.2",
+    "gulp": "^3.9.1"
+  }
+}
