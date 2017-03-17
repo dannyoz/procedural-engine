@@ -1,0 +1,24 @@
+$ize: 3rem;
+
+.centre {
+	@include centre;
+}
+
+.map {
+
+	display: block;
+
+	.row {
+		display: flex;
+	}
+
+	.column {
+		
+		height: $ize;
+		width: $ize;
+
+		border: 1px solid #DDD;
+
+	}
+}
+
