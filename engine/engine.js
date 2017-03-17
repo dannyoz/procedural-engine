@@ -16,7 +16,7 @@ export class Level {
   // Init method 
 	generate() {
     this.createGrid();
-    this.playTiles();
+    this.playZone();
 	}
 
   // Genrates a grid based on width and height
@@ -30,7 +30,7 @@ export class Level {
       for (var j = 0; j < this.width; j++) {
         columns.push({
           name: 'column_'+j,
-          number: (i+1)*(j+1)
+          number: (this.width*i) + (j+1)
         })
       }
 
@@ -45,12 +45,23 @@ export class Level {
     return grid;
   }
 
-  playTiles() {
-    var tile = 9;
-    for (var i = 0; i < this.sectorCount; i++) {
-      console.log(Random(1, this.gridCount));
-    }
+  playZone() {
+    const startTile = Random(1, this.gridCount);
+    this.setStart(47);
+    // for (var i = 0; i < this.sectorCount; i++) {
+    //   console.log(Random(1, this.gridCount));
+    // }
   }
 
-};
+  setStart(int) {
+    const rowIndex = Math.ceil(int/this.width) - 1;
+    let colIndex = Number;
+    this.grid[rowIndex].columns.forEach((col, ind) => {
+      if (col.number == int) {
+        colIndex = ind;
+      }
+    });
+    this.grid[rowIndex].columns[colIndex].start = true;
+  }  
 
+};

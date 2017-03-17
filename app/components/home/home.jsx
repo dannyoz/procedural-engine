@@ -2,7 +2,7 @@ import React from 'react';
 import * as Engine from '../../../engine/engine';
 
 
-const level_1 = new Engine.Level(5,5);
+const level_1 = new Engine.Level(13,4);
 level_1.generate();
 const grid = level_1.grid;
 console.log(level_1);
