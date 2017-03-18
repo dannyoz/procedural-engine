@@ -13,7 +13,7 @@ let home = React.createClass({
 			return (
 				<span className="row" key={index}>
 					{row.columns.map((column, index) => {
-						return <span className="column" key={index}>{column.number}</span>
+						return <span className={column.start ? "column start" : "column"} key={index}>{column.number}</span>
 					})}
 				</span>
 		)});
