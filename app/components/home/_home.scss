@@ -16,9 +16,11 @@ $ize: 3rem;
 		
 		height: $ize;
 		width: $ize;
-
 		border: 1px solid #DDD;
-
+		
+		&.playable {
+			background-color: #EEE;
+		}
 	}
 }
 

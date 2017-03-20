@@ -2,7 +2,7 @@ import React from 'react';
 import * as Engine from '../../../engine/engine';
 
 
-const level_1 = new Engine.Level(13,4);
+const level_1 = new Engine.Level(12,12, 13);
 level_1.generate();
 const grid = level_1.grid;
 console.log(level_1);
@@ -13,7 +13,7 @@ let home = React.createClass({
 			return (
 				<span className="row" key={index}>
 					{row.columns.map((column, index) => {
-						return <span className={column.start ? "column start" : "column"} key={index}>{column.number}</span>
+						return <span className={column.playable ? "column playable" : "column"} key={index}>{column.number}</span>
 					})}
 				</span>
 		)});
