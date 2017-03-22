@@ -6,7 +6,7 @@ import * as Engine from '../../../engine/engine';
 // const grid = level_2.grid;
 // console.log(level_2);
 
-const map = new Engine.map(25, 25, 40);
+const map = new Engine.map(12, 25, 35, 3);
 map.generate();
 const grid = map.grid;
 console.log(map);

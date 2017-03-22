@@ -171,16 +171,19 @@ export class Level2 {
 };
 
 export class map {
-  constructor(width = 15, height = 15, fillPercentage = 40) {
+  constructor(width = 25, height = 25, fillPercentage = 40, smoothing = 2) {
     this.width = width;
     this.height = height;
     this.fillPercentage = fillPercentage;
     this.grid = [];
+    this.smoothing = smoothing;
   }
 
   generate() {
     this.createGrid();
-    this.smoothMap();
+    for (let i = 0; i < this.smoothing; i++) {
+      this.smoothMap();
+    }
   }
 
   pseudoRandomSeed() {
@@ -208,20 +211,20 @@ export class map {
       for (let x = 0; x < this.width; x++) {
         const neighbourWallTiles = this.getSurroundingWallCount(x,y);
         if (neighbourWallTiles > 4)
-          this.grid[x][y] = 1;
+          this.grid[y][x] = 1;
         else if (neighbourWallTiles < 4)
-          this.grid[x][y] = 0;
+          this.grid[y][x] = 0;
       }
     }
   }
 
   getSurroundingWallCount(x,y) {
     let wallCount = 0;
-    for (let neighbourX = x - 1; neighbourX <= x + 1; neighbourX ++) {
-      for (let neighbourY = y - 1; neighbourY <= y + 1; neighbourY ++) {
+    for (let neighbourY = y - 1; neighbourY <= y + 1; neighbourY ++) {
+      for (let neighbourX = x - 1; neighbourX <= x + 1; neighbourX ++) {
         if (neighbourX >= 0 && neighbourX < this.width && neighbourY >= 0 && neighbourY < this.height) {
           if (neighbourX != x || neighbourY != y) {
-            wallCount += this.grid[neighbourX][neighbourY];
+            wallCount += this.grid[neighbourY][neighbourX];
           }
         }
         else {
