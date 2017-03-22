@@ -1,11 +1,10 @@
 import React from 'react';
 import * as Engine from '../../../engine/engine';
 
-
-const level_1 = new Engine.Level(12,12, 13);
-level_1.generate();
-const grid = level_1.grid;
-console.log(level_1);
+const level_2 = new Engine.Level2();
+level_2.generate();
+const grid = level_2.grid;
+console.log(level_2);
 
 let home = React.createClass({
 	render() {
