@@ -169,3 +169,66 @@ export class Level2 {
   }
 
 };
+
+export class map {
+  constructor(width = 15, height = 15, fillPercentage = 40) {
+    this.width = width;
+    this.height = height;
+    this.fillPercentage = fillPercentage;
+    this.grid = [];
+  }
+
+  generate() {
+    this.createGrid();
+    this.smoothMap();
+  }
+
+  pseudoRandomSeed() {
+    return (Random(1,100) < this.fillPercentage) ? 1: 0;
+  }
+
+  createGrid() {
+    const grid = [];
+    for (let y = 0; y < this.height; y++) {
+      const columns = [];
+      for (let x = 0; x < this.width; x++) {
+        if (x == 0 || x == this.width-1 || y == 0 || y == this.height -1) {
+          columns.push(1);
+        } else {
+          columns.push(this.pseudoRandomSeed());
+        }
+      }
+      grid.push(columns);
+    }
+    this.grid = grid;
+  }
+
+  smoothMap() {
+     for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        const neighbourWallTiles = this.getSurroundingWallCount(x,y);
+        if (neighbourWallTiles > 4)
+          this.grid[x][y] = 1;
+        else if (neighbourWallTiles < 4)
+          this.grid[x][y] = 0;
+      }
+    }
+  }
+
+  getSurroundingWallCount(x,y) {
+    let wallCount = 0;
+    for (let neighbourX = x - 1; neighbourX <= x + 1; neighbourX ++) {
+      for (let neighbourY = y - 1; neighbourY <= y + 1; neighbourY ++) {
+        if (neighbourX >= 0 && neighbourX < this.width && neighbourY >= 0 && neighbourY < this.height) {
+          if (neighbourX != x || neighbourY != y) {
+            wallCount += this.grid[neighbourX][neighbourY];
+          }
+        }
+        else {
+          wallCount ++;
+        }
+      }
+    }
+    return wallCount;
+  }
+}
