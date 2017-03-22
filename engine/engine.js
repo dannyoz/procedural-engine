@@ -4,22 +4,34 @@ function Random(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
-export class Level {
-	constructor(width = 5, height = 5, sectorCount = 8) {
-    this.width = width;
-    this.height = height;
-    this.gridCount = width * height;
-		this.sectorCount = sectorCount;
-    this.activeSectors = [];
+export class Level2 {
+  constructor(sectorCount = 9) {
+    this.sectorCount = sectorCount;
+    this.sectors = [];
     this.sectorIDs = [];
     this.grid = [];
-	}
+  }
 
-  // Init method 
-	generate() {
+  generate() {
+    this.calculateGridSize();
     this.createGrid();
-    this.playZone();
-	}
+    this.createPlayZone();
+  }
+
+  // Calculates the ideal map size based on sector count
+  calculateGridSize() {
+    const sqrt = Math.sqrt(this.sectorCount);
+    const idealWidth = Math.floor(sqrt) + 2;
+    const idealCount = idealWidth * idealWidth;
+    const width = Random(2, (idealCount / 2) - 2);
+    const height = Math.round(idealCount / width);
+    const count = height * width;
+
+    this.ideal = idealCount;
+    this.width = width;
+    this.height = height;
+    this.totalCount = count;
+  }
 
   // Genrates a grid based on width and height
   createGrid() {
@@ -43,34 +55,21 @@ export class Level {
     }
 
     this.grid = grid;
-
-    return grid;
   }
 
-  playZone() {
-    const startTile = Random(1, this.gridCount);
-    const startPos = this.getPosition(startTile);
-    this.addSector(1, startTile, startPos);
-    this.grid[startPos.rowIndex].columns[startPos.colIndex].start = true;
-    
-    console.log(this.getAdjacentSector(32));
+  createPlayZone() {
+    for (var i = 0; i < this.sectorCount; i++) {
 
-    for (var i = 0; i < (this.sectorCount - 1); i++) {
-      /* TODO  -  add logic to handle already existing sectors */
-      const previous = this.activeSectors[i];
-      const newSector = this.getAdjacentSector(previous.sectorNumber);
-      this.addSector((i+2), newSector.sectorNumber, newSector.sectorPos);
+      if (i == 0) {
+        const startTile = Random(1, this.totalCount);
+        const startPos = this.getPosition(startTile);
+        this.addSector(1, startTile, startPos);
+      } else {
+        const previous = this.sectors[(i-1)];
+        const newSector = this.getAdjacentSector(previous.sectorNumber);
+        this.addSector((i+1), newSector.sectorNumber, newSector.sectorPos);
+      }
     }
-  }
-
-  addSector(index, sectorNumber, sectorPos) {
-    this.activeSectors.push({
-      index,
-      sectorNumber,
-      sectorPos
-    });
-    this.sectorIDs.push(sectorNumber);
-    this.grid[sectorPos.rowIndex].columns[sectorPos.colIndex].playable = true;
   }
 
   // Returns co-ordinates of a selected tile
@@ -88,8 +87,18 @@ export class Level {
     }
   }
 
+  // Add sector to the list
+  addSector(index, sectorNumber, sectorPos) {
+    this.sectors.push({
+      index,
+      sectorNumber,
+      sectorPos
+    });
+    this.sectorIDs.push(sectorNumber);
+    this.grid[sectorPos.rowIndex].columns[sectorPos.colIndex].playable = true;
+  }
+
   checkExisting(id) {
-    console.log(id);
     return this.sectorIDs.indexOf(id) > -1;
   }
 
@@ -104,7 +113,7 @@ export class Level {
     let rowIndex, colIndex;
 
     if (pos.rowIndex > 0) {
-      if (this.checkExisting(n)) {
+      if (!this.checkExisting(n)) {
         options.push({
           sectorNumber: n,
           sectorPos: {
@@ -116,38 +125,47 @@ export class Level {
     }
 
     if (pos.rowIndex < (this.height - 1)) {
-      options.push({
-        sectorNumber: s,
-        sectorPos: {
-          rowIndex: pos.rowIndex + 1,
-          colIndex: pos.colIndex,
-        }      
-      });
+      if (!this.checkExisting(s)) {
+        options.push({
+          sectorNumber: s,
+          sectorPos: {
+            rowIndex: pos.rowIndex + 1,
+            colIndex: pos.colIndex,
+          }      
+        });
+      }
     }
 
     if (pos.colIndex < (this.width - 1)) {
-      options.push({
-        sectorNumber: e,
-        sectorPos: {
-          rowIndex: pos.rowIndex,
-          colIndex: pos.colIndex + 1,
-        }      
-      });
+      if (!this.checkExisting(e)) {
+        options.push({
+          sectorNumber: e,
+          sectorPos: {
+            rowIndex: pos.rowIndex,
+            colIndex: pos.colIndex + 1,
+          }      
+        });
+      }
     }
 
     if (pos.colIndex > 0) {
-      options.push({
-        sectorNumber: w,
-        sectorPos: {
-          rowIndex: pos.rowIndex,
-          colIndex: pos.colIndex - 1,
-        }      
-      });
+      if (!this.checkExisting(w)) {
+        options.push({
+          sectorNumber: w,
+          sectorPos: {
+            rowIndex: pos.rowIndex,
+            colIndex: pos.colIndex - 1,
+          }      
+        });
+      }
     }
 
-    const choice = options[Random(1, options.length) - 1];
+    if (options.length == 0) {
+      console.log('pNOIC');
+      this.generate();
+    }
 
-    return choice;
+    return options[Random(1, options.length) - 1];
   }
 
 };
