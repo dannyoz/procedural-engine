@@ -1,11 +1,6 @@
 import React from 'react';
 import * as Engine from '../../../engine/engine';
 
-// const level_2 = new Engine.Level2();
-// level_2.generate();
-// const grid = level_2.grid;
-// console.log(level_2);
-
 let home = React.createClass({
 
 	getInitialState() {
@@ -21,7 +16,12 @@ let home = React.createClass({
 		this.generate();
 	},
 	generate() {
-		const map = new Engine.map(12, 18, 23, 3);
+		let w = this.state.width;
+		let h = this.state.height;
+		let f = this.state.fill;
+		let s = this.state.smoothing;
+		let map = new Engine.map(w, h, f, s);
+
 		map.generate();
 		const grid = map.grid;
 		console.log(map);
@@ -50,16 +50,26 @@ let home = React.createClass({
 						{map}
 					</div>
 				</div>
-				<div>
-					<label>width</label>
-					<input value={this.state.width} type="number" onChange={this.handleChange.bind(null,'width')}/>
-					<label>height</label>
-					<input value={this.state.height} type="number" onChange={this.handleChange.bind(null,'height')}/>
-					<label>fill</label>
-					<input value={this.state.fill} type="number" onChange={this.handleChange.bind(null,'fill')}/>
-					<label>smoothing</label>
-					<input value={this.state.smoothing} type="number" onChange={this.handleChange.bind(null,'smoothing')}/>
-					<button onClick={this.generate}>generate</button>
+				<div className="controls">
+					<div className="controls__input">
+						<label>Width: {this.state.width}</label>
+						<input value={this.state.width} type="range" min="12" max="40" onChange={this.handleChange.bind(null,'width')}/>
+					</div>
+					<div className="controls__input">
+						<label>Height: {this.state.height}</label>
+						<input value={this.state.height} type="range" min="12" max="40" onChange={this.handleChange.bind(null,'height')}/>
+					</div>
+					<div className="controls__input">
+						<label>Fill: {this.state.fill}</label>
+						<input value={this.state.fill} type="range" min="10" onChange={this.handleChange.bind(null,'fill')}/>
+					</div>
+					<div className="controls__input">
+						<label>Smoothing: {this.state.smoothing}</label>
+						<input value={this.state.smoothing} type="range" max="5" onChange={this.handleChange.bind(null,'smoothing')}/>
+					</div>
+					<div className="controls__input">
+						<button onClick={this.generate}>generate</button>
+					</div>
 				</div>
 			</div>
 		);
