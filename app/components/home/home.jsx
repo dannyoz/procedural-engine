@@ -12,7 +12,8 @@ let home = React.createClass({
 			width: 25,
 			height: 25,
 			fill: 40,
-			smoothing: 3,
+			smoothing: 4,
+			cycles: 3,
 			grid: [],
 		}
 	},
@@ -24,7 +25,8 @@ let home = React.createClass({
 		let h = this.state.height;
 		let f = this.state.fill;
 		let s = this.state.smoothing;
-		let map = new Engine.map(w, h, f, s);
+		let c = this.state.cycles;
+		let map = new Engine.map(w, h, f, s, c);
 
 		map.generate();
 		const grid = map.grid;
@@ -57,7 +59,7 @@ let home = React.createClass({
 				<div className="controls">
 					<div className="controls__input">
 						<label>Width: {this.state.width}</label>
-						<input value={this.state.width} type="range" min="12" max="40" onChange={this.handleChange.bind(null,'width')}/>
+						<input value={this.state.width} type="range" min="12" max="200" onChange={this.handleChange.bind(null,'width')}/>
 					</div>
 					<div className="controls__input">
 						<label>Height: {this.state.height}</label>
@@ -69,7 +71,11 @@ let home = React.createClass({
 					</div>
 					<div className="controls__input">
 						<label>Smoothing: {this.state.smoothing}</label>
-						<input value={this.state.smoothing} type="range" max="5" onChange={this.handleChange.bind(null,'smoothing')}/>
+						<input value={this.state.smoothing} type="range" min="4" max="6" onChange={this.handleChange.bind(null,'smoothing')}/>
+					</div>
+					<div className="controls__input">
+						<label>Smoothing cycles: {this.state.cycles}</label>
+						<input value={this.state.cycles} type="range" max="5" onChange={this.handleChange.bind(null,'cycles')}/>
 					</div>
 					<div className="controls__input">
 						<button onClick={this.generate}>generate</button>
