@@ -1,5 +1,9 @@
 import React from 'react';
+
 import * as Engine from '../../../engine/engine';
+
+let sectors = new Engine.sectors();
+console.log('sectors : ', sectors);
 
 let home = React.createClass({
 

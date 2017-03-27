@@ -69,3 +69,25 @@ export class map {
     return wallCount;
   }
 }
+
+export class sectors {
+  constructor(width = 5, height = 5) {
+    this.width = width;
+    this.height = height;
+    this.grid = new grid(this.width, this.height);
+  }
+}
+
+export function grid(width,height) {
+  const grid = [];
+    for (let y = 0; y < height; y++) {
+      const columns = [];
+      for (let x = 0; x < width; x++) {
+          columns.push({
+            postition: `${x}-${y}`, 
+          });
+      }
+      grid.push(columns);
+    }
+    return grid;
+};
