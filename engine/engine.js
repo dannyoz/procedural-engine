@@ -5,17 +5,18 @@ function Random(min, max) {
 };
 
 export class map {
-  constructor(width = 25, height = 25, fillPercentage = 40, smoothing = 2) {
+  constructor(width = 25, height = 25, fillPercentage = 40, smoothing = 4, smoothCycles = 3) {
     this.width = width;
     this.height = height;
     this.fillPercentage = fillPercentage;
     this.grid = [];
     this.smoothing = smoothing;
+    this.smoothCycles = smoothCycles;
   }
 
   generate() {
     this.createGrid();
-    for (let i = 0; i < this.smoothing; i++) {
+    for (let i = 0; i < this.smoothCycles; i++) {
       this.smoothMap();
     }
   }
@@ -44,9 +45,9 @@ export class map {
      for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         const neighbourWallTiles = this.getSurroundingWallCount(x,y);
-        if (neighbourWallTiles > 4)
+        if (neighbourWallTiles > this.smoothing)
           this.grid[y][x] = 1;
-        else if (neighbourWallTiles < 4)
+        else if (neighbourWallTiles < this.smoothing)
           this.grid[y][x] = 0;
       }
     }

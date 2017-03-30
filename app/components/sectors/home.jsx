@@ -1,16 +1,13 @@
 import React from 'react';
 
-import * as Engine from '../../../engine/engine';
-
-let sectors = new Engine.sectors();
-console.log('sectors : ', sectors);
+import * as Engine from '../../../engine/sectors';
 
 let home = React.createClass({
 
 	getInitialState() {
 		return {
-			width: 25,
-			height: 25,
+			width: 7,
+			height: 5,
 			fill: 40,
 			smoothing: 4,
 			cycles: 3,
@@ -21,18 +18,18 @@ let home = React.createClass({
 		this.generate();
 	},
 	generate() {
-		let w = this.state.width;
-		let h = this.state.height;
-		let f = this.state.fill;
-		let s = this.state.smoothing;
-		let c = this.state.cycles;
-		let map = new Engine.map(w, h, f, s, c);
+		const w = this.state.width;
+		const h = this.state.height;
+		const f = this.state.fill;
+		const s = this.state.smoothing;
+		const c = this.state.cycles;
+		// const map = new Engine.map(w, h, f, s, c);
+		const sectors = new Engine.sectors(w, h);
 
-		map.generate();
-		const grid = map.grid;
-		console.log(map);
+		console.log(sectors);
+
 		this.setState({
-			grid: grid
+			grid: sectors.grid
 		});
 	},
 	handleChange(key, event) {
@@ -45,7 +42,7 @@ let home = React.createClass({
 			return (
 				<span className="row" key={index}>
 					{row.map((column, index) => {
-						return <span className={column == 1 ? "column playable" : "column"} key={index}></span>
+						return <span className={column.playable ? "column playable" : "column"} key={index}></span>
 					})}
 				</span>
 		)});
@@ -59,11 +56,11 @@ let home = React.createClass({
 				<div className="controls">
 					<div className="controls__input">
 						<label>Width: {this.state.width}</label>
-						<input value={this.state.width} type="range" min="12" max="200" onChange={this.handleChange.bind(null,'width')}/>
+						<input value={this.state.width} type="range" min="3" max="200" onChange={this.handleChange.bind(null,'width')}/>
 					</div>
 					<div className="controls__input">
 						<label>Height: {this.state.height}</label>
-						<input value={this.state.height} type="range" min="12" max="40" onChange={this.handleChange.bind(null,'height')}/>
+						<input value={this.state.height} type="range" min="3" max="200" onChange={this.handleChange.bind(null,'height')}/>
 					</div>
 					<div className="controls__input">
 						<label>Fill: {this.state.fill}</label>
