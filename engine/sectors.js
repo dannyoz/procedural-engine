@@ -57,19 +57,25 @@ export class sectors {
   };
 
   findEmptyAreas() {
+    const emptyCells = [];
     const emptyRows = [];
     const emptyColumns = [];
 
-    // this.grid.forEach((row, y) => {
-    //   row.forEach((col, x) => {
-    //     console.log(col);
-    //     if (thi.grid[y][x])
-    //   });
-    // });
+    this.grid.forEach((row, y) => {
+      row.forEach((col, x) => {
+        if(!this.grid[y][x].playable){
+          emptyCells.push({x, y});
+          emptyRows.push(y);
+          emptyColumns.push(x);
+          emptyColumns.sort();
+          console.log(emptyRows.indexOf(y));
+        }
+      });
+    });
 
     return {
       emptyRows,
-      emptyColumns
+      emptyColumns,
     }
   };
 
@@ -81,7 +87,7 @@ export function grid(width,height) {
       const columns = [];
       for (let x = 0; x < width; x++) {
           columns.push({
-            postition: `${x}-${y}`,
+            postition: {x,y},
             playable: false
           });
       }
