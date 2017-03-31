@@ -5,9 +5,10 @@ function Random(min, max) {
 };
 
 export class sectors {
-  constructor(width = 5, height = 5) {
+  constructor(width = 5, height = 5, restrict = 1) {
     this.width = width;
     this.height = height;
+    this.restrict = restrict;
     this.grid = new grid(this.width, this.height);
     this.path = [];
     this.definePath();
@@ -21,7 +22,7 @@ export class sectors {
 
     let i = 0;
     let sect = this.availableAdjacent(this.path[i].x, this.path[i].y);
-    while (sect.count > 1 && i < (this.width*this.height)) {
+    while (sect.count > this.restrict && i < (this.width*this.height)) {
       this.playableZone(sect.choice.x, sect.choice.y);
       i ++ ;
       sect = this.availableAdjacent(this.path[i].x, this.path[i].y);

@@ -7,10 +7,8 @@ let home = React.createClass({
 	getInitialState() {
 		return {
 			width: 7,
-			height: 5,
-			fill: 40,
-			smoothing: 4,
-			cycles: 3,
+			height: 7,
+			restrict: 1,
 			grid: [],
 		}
 	},
@@ -20,11 +18,9 @@ let home = React.createClass({
 	generate() {
 		const w = this.state.width;
 		const h = this.state.height;
-		const f = this.state.fill;
-		const s = this.state.smoothing;
-		const c = this.state.cycles;
+		const r = this.state.restrict;
 		// const map = new Engine.map(w, h, f, s, c);
-		const sectors = new Engine.sectors(w, h);
+		const sectors = new Engine.sectors(w, h, r);
 
 		console.log(sectors);
 
@@ -63,16 +59,8 @@ let home = React.createClass({
 						<input value={this.state.height} type="range" min="3" max="200" onChange={this.handleChange.bind(null,'height')}/>
 					</div>
 					<div className="controls__input">
-						<label>Fill: {this.state.fill}</label>
-						<input value={this.state.fill} type="range" min="10" onChange={this.handleChange.bind(null,'fill')}/>
-					</div>
-					<div className="controls__input">
-						<label>Smoothing: {this.state.smoothing}</label>
-						<input value={this.state.smoothing} type="range" min="4" max="6" onChange={this.handleChange.bind(null,'smoothing')}/>
-					</div>
-					<div className="controls__input">
-						<label>Smoothing cycles: {this.state.cycles}</label>
-						<input value={this.state.cycles} type="range" max="5" onChange={this.handleChange.bind(null,'cycles')}/>
+						<label>restrict: {this.state.restrict}</label>
+						<input value={this.state.restrict} type="range" min="0" max="3" onChange={this.handleChange.bind(null,'restrict')}/>
 					</div>
 					<div className="controls__input">
 						<button onClick={this.generate}>generate</button>
