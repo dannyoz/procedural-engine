@@ -6,8 +6,8 @@ let home = React.createClass({
 
 	getInitialState() {
 		return {
-			width: 7,
-			height: 7,
+			width: 8,
+			height: 9,
 			restrict: 1,
 			grid: [],
 		}

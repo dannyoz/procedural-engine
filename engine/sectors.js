@@ -12,7 +12,7 @@ export class sectors {
     this.grid = new grid(this.width, this.height);
     this.path = [];
     this.definePath();
-    console.log(this.findEmptyAreas());
+    this.fillEmptyAreas();
   }
 
   definePath() {
@@ -56,19 +56,53 @@ export class sectors {
     };
   };
 
+  fillEmptyAreas() {
+    const emptyAreas = this.findEmptyAreas();
+    if(emptyAreas.emptyColumns.length) {
+      const randomRow = Random(0, (this.height - 1));
+      emptyAreas.emptyColumns.forEach((colIndex) => {
+        this.playableZone(colIndex, randomRow);
+      });
+    }
+
+    if(emptyAreas.emptyRows.length) {
+      const randomCol = Random(0, (this.width - 1));
+      emptyAreas.emptyRows.forEach((rowIndex) => {
+        this.playableZone(randomCol, rowIndex);
+      });
+    }
+  }
+
   findEmptyAreas() {
-    const emptyCells = [];
+    const rows = {};
+    const cols = {};
     const emptyRows = [];
     const emptyColumns = [];
 
     this.grid.forEach((row, y) => {
       row.forEach((col, x) => {
         if(!this.grid[y][x].playable){
-          emptyCells.push({x, y});
-          emptyRows.push(y);
-          emptyColumns.push(x);
-          emptyColumns.sort();
-          console.log(emptyRows.indexOf(y));
+
+          if (!rows[y]) {
+            rows[y] = 1;
+          } else {
+            rows[y] += 1;
+          }
+
+          if (rows[y] === this.width) {
+            emptyRows.push(y);
+          }
+
+          if (!cols[x]) {
+            cols[x] = 1;
+          } else {
+            cols[x] += 1;
+          }
+
+          if (cols[x] === this.height) {
+            emptyColumns.push(x);
+          }
+
         }
       });
     });
