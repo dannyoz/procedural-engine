@@ -17,6 +17,10 @@ export class sectors {
   };
 
   definePath(x, y) {
+    const tl = {x: 0, y: 0};
+    const tr = {x: this.width -1, y: 0};
+    const bl = {x: 0, y: this.height -1};
+    const br = {x: this.width -1, y: this.height -1};
     const startX = (x) ? x : Random(0, this.width);
     const startY = (y) ? y : Random(0, this.height);
     this.playableZone(startX, startY);

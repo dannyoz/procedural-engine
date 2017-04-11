@@ -1,6 +1,7 @@
 import React from 'react';
 
 import * as Engine from '../../../engine/sectors';
+import Path from './paths.jsx';
 
 let home = React.createClass({
 
@@ -16,16 +17,17 @@ let home = React.createClass({
 		this.generate();
 	},
 	generate() {
-		const w = this.state.width;
-		const h = this.state.height;
-		const r = this.state.restrict;
+		const w = Number(this.state.width);
+		const h = Number(this.state.height);
+		const r = Number(this.state.restrict);
 		// const map = new Engine.map(w, h, f, s, c);
 		const sectors = new Engine.sectors(w, h, r);
 
 		console.log(sectors);
 
 		this.setState({
-			grid: sectors.grid
+			grid: sectors.grid,
+			path: sectors.path,
 		});
 	},
 	handleChange(key, event) {
@@ -33,12 +35,15 @@ let home = React.createClass({
 		state[key] = event.target.value;
 		this.setState(state); 
 	},
+	highlight(cell) {
+		console.log(cell);
+	},
 	render() {
-		let map = this.state.grid.map((row, index) => {
+		let map = this.state.grid.map((row, y) => {
 			return (
-				<span className="row" key={index}>
-					{row.map((column, index) => {
-						return <span className={column.playable ? "column playable" : "column"} key={index}></span>
+				<span className="row" key={y}>
+					{row.map((column, x) => {
+						return <span className={column.playable ? "column playable" : "column"} key={x}></span>
 					})}
 				</span>
 		)});
@@ -66,6 +71,7 @@ let home = React.createClass({
 						<button onClick={this.generate}>generate</button>
 					</div>
 				</div>
+				<Path path={this.state.path} highlight={this.highlight}/>
 			</div>
 		);
 	}
