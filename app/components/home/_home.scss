@@ -21,6 +21,10 @@ $ize: 1rem;
 		&.playable {
 			background-color: #EEE;
 		}
+
+		&.active {
+			background-color: #DDD;
+		}
 	}
 }
 

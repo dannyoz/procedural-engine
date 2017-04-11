@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import * as Engine from '../../../engine/sectors';
 import Path from './paths.jsx';
@@ -11,6 +12,7 @@ let home = React.createClass({
 			height: 9,
 			restrict: 1,
 			grid: [],
+			active: {},
 		}
 	},
 	componentDidMount() {
@@ -33,17 +35,23 @@ let home = React.createClass({
 	handleChange(key, event) {
 		const state = this.state;
 		state[key] = event.target.value;
-		this.setState(state); 
+		this.setState(state);
 	},
 	highlight(cell) {
-		console.log(cell);
+		this.setState({
+			active: cell,
+		});
 	},
 	render() {
 		let map = this.state.grid.map((row, y) => {
 			return (
 				<span className="row" key={y}>
 					{row.map((column, x) => {
-						return <span className={column.playable ? "column playable" : "column"} key={x}></span>
+						let cellClass = classNames('column', {
+							'playable' : column.playable,
+							'active' : x === this.state.active.x && y === this.state.active.y,
+						});
+						return <span className={cellClass} key={x}></span>
 					})}
 				</span>
 		)});
