@@ -30,6 +30,7 @@ let home = React.createClass({
 		this.setState({
 			grid: sectors.grid,
 			path: sectors.path,
+			active: {},
 		});
 	},
 	handleChange(key, event) {

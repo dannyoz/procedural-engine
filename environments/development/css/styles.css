@@ -191,3 +191,5 @@ body {
     border: 2px solid white; }
   .path li {
     padding: 0.5rem; }
+    .path li.active {
+      background-color: #DDD; }

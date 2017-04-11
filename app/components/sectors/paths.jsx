@@ -1,13 +1,18 @@
 import React from 'react';
 
-class Path extends React.Component {
-	constructor(props) {
-		super(props);
+let Path = React.createClass({
+	getInitialState() {
+		return {
+			active: null,
+		}
+	},
 
-		this.state = {
-			active: 0,
-		};
-	}
+	highlight(cell, index) {
+		this.setState({
+			active: index,
+		})
+		this.props.highlight(cell);
+	},
 
 	render() {
 
@@ -17,7 +22,7 @@ class Path extends React.Component {
 					<ul>
 						{this.props.path.map((cell, index) => {
 							return (
-								<li onClick={this.props.highlight.bind(null, cell)} key={index}>
+								<li className={this.state.active === index ? 'active' : ''} onClick={this.highlight.bind(null, cell, index)} key={index}>
 									<span>Cell {index+1}</span><br />
 									<span>X: {cell.x} Y: {cell.y}</span>
 								</li>
@@ -28,6 +33,6 @@ class Path extends React.Component {
 			</div>
 		);
 	}
-};
+});
 
 export default Path;

@@ -12,7 +12,7 @@ export class sectors {
     this.grid = new grid(this.width, this.height);
     this.path = [];
     this.definePath();
-    this.refinePaths();
+    // this.refinePaths();
     // this.fillEmptyAreas();
   };
 
