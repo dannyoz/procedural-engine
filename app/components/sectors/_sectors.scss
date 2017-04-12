@@ -1,0 +1,13 @@
+.path {
+	$sideBarCol: #E9E9E9;
+	@include sideBar(10rem,'left', $sideBarCol);
+	@include scrollbar($sideBarCol);
+
+	li {
+		padding: 0.5rem;
+
+		&.active {
+			background-color: #DDD;
+		}
+	}
+}
