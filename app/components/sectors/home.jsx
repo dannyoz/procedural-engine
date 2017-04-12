@@ -10,7 +10,7 @@ let home = React.createClass({
 		return {
 			width: 8,
 			height: 9,
-			restrict: 1,
+			restrict: 0,
 			grid: [],
 			active: {},
 		}
@@ -66,11 +66,11 @@ let home = React.createClass({
 				<div className="controls">
 					<div className="controls__input">
 						<label>Width: {this.state.width}</label>
-						<input value={this.state.width} type="range" min="3" max="200" onChange={this.handleChange.bind(null,'width')}/>
+						<input value={this.state.width} type="range" min="3" max="20" onChange={this.handleChange.bind(null,'width')}/>
 					</div>
 					<div className="controls__input">
 						<label>Height: {this.state.height}</label>
-						<input value={this.state.height} type="range" min="3" max="200" onChange={this.handleChange.bind(null,'height')}/>
+						<input value={this.state.height} type="range" min="3" max="20" onChange={this.handleChange.bind(null,'height')}/>
 					</div>
 					<div className="controls__input">
 						<label>restrict: {this.state.restrict}</label>

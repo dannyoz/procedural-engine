@@ -7,6 +7,31 @@ let Path = React.createClass({
 		}
 	},
 
+	componentDidMount() {
+		const self = this;
+		window.onkeydown = (e) => {
+			self.handleKeyPress(e.key);
+		};
+	},
+
+	handleKeyPress(key) {
+		if (key === 'ArrowDown' && this.state.active === null) {
+			this.setState({
+				active: 1
+			});
+		} else if (key === 'ArrowDown' && this.state.active < (this.props.path.length -1)) {
+			this.setState({
+				active: this.state.active + 1
+			});
+		} else if (key === 'ArrowUp' && this.state.active > 0) {
+			this.setState({
+				active: this.state.active - 1
+			});
+		}
+		const cell = this.props.path[this.state.active];
+		this.props.highlight(cell);
+	},
+
 	highlight(cell, index) {
 		this.setState({
 			active: index,

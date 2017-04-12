@@ -190,6 +190,7 @@ body {
     background: #d0d0d0;
     border: 2px solid white; }
   .path li {
-    padding: 0.5rem; }
+    padding: 0.5rem;
+    cursor: pointer; }
     .path li.active {
       background-color: #DDD; }
