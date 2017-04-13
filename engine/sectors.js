@@ -22,8 +22,9 @@ export class sectors {
     const corner = this.availableCorners[cornerIndex];
     this.playableZone(corner.x, corner.y);
 
-    let i = 0;
+    let i = (!this.path.length) ? 0 : this.path.length -1;
     let sect = this.availableAdjacent(this.path[i].x, this.path[i].y);
+    console.log(sect.count);
     while (sect.count > this.restrict && i < (this.width*this.height)) {
       this.playableZone(sect.choice.x, sect.choice.y);
       i ++ ;
