@@ -24,7 +24,6 @@ export class sectors {
 
     let i = (!this.path.length) ? 0 : this.path.length -1;
     let sect = this.availableAdjacent(this.path[i].x, this.path[i].y);
-    console.log(sect.count);
     while (sect.count > this.restrict && i < (this.width*this.height)) {
       this.playableZone(sect.choice.x, sect.choice.y);
       i ++ ;
@@ -140,7 +139,6 @@ export class sectors {
     // let i = 0;
     for (var i = 0; i < this.availableCorners.length; i++) {
       if (this.emptyColumns.length || this.emptyRows.length) {
-        console.log('more paths required');
         this.definePath();
       }
     };
