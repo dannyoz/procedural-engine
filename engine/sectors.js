@@ -13,11 +13,11 @@ export class sectors {
     this.availableCorners = this.getAvailableCorners();
     this.path = [];
     this.definePath();
-    // this.refinePaths();
+    this.refinePaths();
     // this.fillEmptyAreas();
   };
 
-  definePath(x, y) {
+  definePath() {
     const cornerIndex = Random(0, this.availableCorners.length);
     const corner = this.availableCorners[cornerIndex];
     this.playableZone(corner.x, corner.y);
@@ -136,15 +136,27 @@ export class sectors {
   };
 
   refinePaths() {
-    let i = 0;
-    while (this.emptyColumns.length || this.emptyRows.length && i < this.availableCorners.length) {
-      this.definePath();
-      i ++;
+    // let i = 0;
+    for (var i = 0; i < this.availableCorners.length; i++) {
+      if (this.emptyColumns.length || this.emptyRows.length) {
+        console.log('more paths required');
+        this.definePath();
+      }
     };
+    // while (this.emptyColumns.length || this.emptyRows.length && i < 3) { 
+    //   i ++;
+    //   // this.definePath();
+    //   console.log('empty areas');
+    // };
   };
 
   getAvailableCorners() {
-    const corners = [{x: 0, y: 0},{x: this.width -1, y: 0},{x: 0, y: this.height -1},{x: this.width -1, y: this.height -1}];
+    const corners = [
+      {x: 0, y: 0},
+      {x: this.width -1, y: 0},
+      {x: 0, y: this.height -1},
+      {x: this.width -1, y: this.height -1}
+    ];
     let available = corners.filter((cell) => {
       return !this.grid[cell.y][cell.x].playable;
     });
