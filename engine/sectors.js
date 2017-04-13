@@ -14,7 +14,7 @@ export class sectors {
     this.path = [];
     this.definePath();
     this.refinePaths();
-    // this.fillEmptyAreas();
+    //this.fillEmptyAreas();
   };
 
   definePath() {
@@ -136,17 +136,13 @@ export class sectors {
   };
 
   refinePaths() {
-    // let i = 0;
-    for (var i = 0; i < this.availableCorners.length; i++) {
+    let j = 0;
+    while (j < 3) { 
+      j ++;
       if (this.emptyColumns.length || this.emptyRows.length) {
         this.definePath();
       }
     };
-    // while (this.emptyColumns.length || this.emptyRows.length && i < 3) { 
-    //   i ++;
-    //   // this.definePath();
-    //   console.log('empty areas');
-    // };
   };
 
   getAvailableCorners() {
