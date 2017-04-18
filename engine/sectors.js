@@ -10,22 +10,19 @@ export class sectors {
     this.height = height;
     this.restrict = restrict;
     this.grid = new grid(this.width, this.height);
+    this.availableCorners = this.getAvailableCorners();
     this.path = [];
     this.definePath();
-    // this.refinePaths();
-    // this.fillEmptyAreas();
+    this.refinePaths();
+    //this.fillEmptyAreas();
   };
 
-  definePath(x, y) {
-    const tl = {x: 0, y: 0};
-    const tr = {x: this.width -1, y: 0};
-    const bl = {x: 0, y: this.height -1};
-    const br = {x: this.width -1, y: this.height -1};
-    const startX = (x) ? x : Random(0, this.width);
-    const startY = (y) ? y : Random(0, this.height);
-    this.playableZone(startX, startY);
+  definePath() {
+    const cornerIndex = Random(0, this.availableCorners.length);
+    const corner = this.availableCorners[cornerIndex];
+    this.playableZone(corner.x, corner.y);
 
-    let i = 0;
+    let i = (!this.path.length) ? 0 : this.path.length -1;
     let sect = this.availableAdjacent(this.path[i].x, this.path[i].y);
     while (sect.count > this.restrict && i < (this.width*this.height)) {
       this.playableZone(sect.choice.x, sect.choice.y);
@@ -35,6 +32,7 @@ export class sectors {
 
     this.emptyColumns = this.findEmptyAreas().emptyColumns;
     this.emptyRows = this.findEmptyAreas().emptyRows;
+    this.availableCorners = this.getAvailableCorners();
   };
 
   playableZone(x, y) {
@@ -138,11 +136,27 @@ export class sectors {
   };
 
   refinePaths() {
-    let i = 0;
-    while (this.emptyColumns.length || this.emptyRows.length && i < 3) {
-      this.definePath();
-      i ++;
+    let j = 0;
+    while (j < 3) { 
+      j ++;
+      if (this.emptyColumns.length || this.emptyRows.length) {
+        this.definePath();
+      }
     };
+  };
+
+  getAvailableCorners() {
+    const corners = [
+      {x: 0, y: 0},
+      {x: this.width -1, y: 0},
+      {x: 0, y: this.height -1},
+      {x: this.width -1, y: this.height -1}
+    ];
+    let available = corners.filter((cell) => {
+      return !this.grid[cell.y][cell.x].playable;
+    });
+
+    return available;
   };
 
 }
