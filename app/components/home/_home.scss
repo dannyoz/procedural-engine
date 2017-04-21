@@ -1,6 +1,17 @@
+@function texture($name) {
+	@return url(../img/textures/#{$name}.png);
+}
+
+@mixin textureBlock($texture) {
+	background-image: texture($texture);	
+	background-size: cover;
+}
+
+
+
 @include googleFont('source-sans',body);
 
-$ize: 1rem;
+$ize: 3rem;
 
 .centre {
 	@include centre;
@@ -18,14 +29,16 @@ $ize: 1rem;
 		
 		height: $ize;
 		width: $ize;
-		border: 1px solid #DDD;
+		border: 1px solid rgba(0,0,0,0.3);
+		background-image: texture('inactive');
+		background-size: cover;
 		
 		&.playable {
-			background-color: #EEE;
+			background-image: texture('grass1');
 		}
 
 		&.active {
-			background-color: #DDD;
+			background-image: texture('grass-bright');
 		}
 	}
 }
