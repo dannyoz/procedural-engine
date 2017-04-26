@@ -188,13 +188,15 @@ body {
   .map .row {
     display: flex; }
   .map .column {
-    height: 1rem;
-    width: 1rem;
-    border: 1px solid #DDD; }
+    height: 3rem;
+    width: 3rem;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    background-image: url(../img/textures/inactive.png);
+    background-size: cover; }
     .map .column.playable {
-      background-color: #EEE; }
+      background-image: url(../img/textures/grass1.png); }
     .map .column.active {
-      background-color: #DDD; }
+      background-image: url(../img/textures/grass-bright.png); }
 
 .controls {
   background-color: #ddd;
